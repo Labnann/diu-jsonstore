@@ -11,12 +11,14 @@ class JSONStore {
 
   add(obj) {
     if (obj.id === undefined) {
-      throw new Error("Object must have an id");
+      console.warn("No ID provided, saved nothing");
+      return false;
     }
 
     const db = JSON.parse(fs.readFileSync(this.file, "utf8"));
     db[obj.id] = obj;
     fs.writeFileSync(this.file, JSON.stringify(db));
+    return true;
   }
 
   read(id) {
